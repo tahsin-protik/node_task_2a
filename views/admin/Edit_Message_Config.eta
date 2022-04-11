@@ -1,0 +1,42 @@
+<% if(it.layout_clean_mode) {%>
+<% layout("../layouts/admin/Clean") %>
+<% } else {%>
+<% layout("../layouts/admin/Main") %>
+<%}%>
+
+
+<div class="tab-content mx-4 my-4" id="nav-tabContent">
+
+<%~ includeFile("../partials/admin/GlobalResponse.eta", it) %>
+
+<section>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="card" id="users_filter_listing">
+        <div class="card-body">
+          <h5 class="primaryHeading2 text-md-left">
+            Edit Termination Message
+          </h5>
+          
+          <form action="/admin/api/config-termination" method="post">
+                
+                <div class="mb-3">
+                    <label for="message" class="form-label">Termination Message</label>
+                    
+                    <textarea type="textarea" class="form-control" id="message" name="message"><%= it.message %></textarea>
+                    
+
+                    <label for="counter" class="form-label">Counter (In seconds) </label>
+                    
+                    <input type="text" class="form-control" id="counter" name="counter" value='<%= it.counter %>'>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+</div>
