@@ -457,4 +457,59 @@ app.get("/admin/api/quizzes", async function (req, res, next) {
   }
 });
 
+app.post('/admin/api/config-termination', SessionService.verifySessionMiddleware(role, "admin"),
+async function (req, res, next){
+
+  try{
+    
+    const {message, counter} = req.body;
+    console.log(req.body);
+    if(message) {
+      await db.config_termination.update(
+      {
+      message: message,
+    }, {
+      where: {id: 1} 
+    })
+    }
+
+    if(counter){
+      await db.config_termination.update(
+        {
+        counter: counter,
+      }, {
+        where: {id: 1} 
+      })
+    }
+    let response= await db.config_termination.findOne();
+    return res.redirect('/admin/config-message');
+  }
+  catch(error){
+    return res.status(500).json({ success: false, message: error.message || "Something went wrong" });
+  }
+
+})
+
+app.get('/admin/config-message/', SessionService.verifySessionMiddleware(role, "admin"), async function (req, res, next){
+      try{
+        const response= await db.config_termination.findOne();
+        const viewModel= new require('../../view_models/edit_message_view_model')(response);
+        return res.render('admin/Edit_Message_Config', viewModel);
+      }
+      catch(err){
+        return res.status(500).json({ success: false, message: error.message || "Something went wrong" });
+      }
+})
+
+app.get('/api/config-termination', async function (req, res, next){
+  try{
+    let response= await db.config_termination.findOne();
+    return res.status(200).json({ success: true, data: response });
+  }
+  catch(err)
+  {
+    next(err);
+  }
+})
+
 module.exports = app;

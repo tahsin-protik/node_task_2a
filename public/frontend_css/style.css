@@ -836,7 +836,17 @@ input::-ms-input-placeholder {
   width: -moz-max-content;
   position: relative;
 }
+#page4 .createdByNameWrapper {
+  width: 204px;
+  position: absolute;
+  top: 65%;
+  left: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #page4 .createdByName {
+
   font: 16px "Necto Mono";
   font-weight: 700;
   width: max-content;
